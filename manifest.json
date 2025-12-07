@@ -1,0 +1,9 @@
+﻿{
+  "name":  "CyberSeedSetter",
+  "description":  "Reproducible cybergrind runs!!",
+  "version_number":  "1.0.0",
+  "website_url":  "https://github.com/10-days-till-xmas/TimerExtensions",
+  "dependencies":  [
+    "bbepis-BepInExPack-5.4.2121"
+  ]
+}
