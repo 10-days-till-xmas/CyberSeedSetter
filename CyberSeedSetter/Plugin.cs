@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
-using CyberSeedSetter.Cheats;
-using CyberSeedSetter.ConsoleCommands;
 using HarmonyLib;
 using UnityEngine;
 
@@ -38,12 +36,10 @@ public sealed class Plugin : BaseUnityPlugin
         var harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
         harmony.PatchAll();
         var m_EndlessGridPatcher_Random = ((Delegate)EndlessGridPatcher.Random_Range_Replacer).Method;
-        foreach (var method in AccessTools.GetDeclaredMethods(typeof(EndlessGrid)))
-        {
-            if (!method.HasMethodBody()) continue;
-            if (method.MemberType != MemberTypes.Method) continue;
-            if (method.IsSpecialName) continue;
-            harmony.Patch(method, transpiler: new HarmonyMethod(m_EndlessGridPatcher_Random));
-        }
+        AccessTools.GetDeclaredMethods(typeof(EndlessGrid))
+                   .Where(static m => m.HasMethodBody()
+                                   && m.MemberType == MemberTypes.Method
+                                   && !m.IsSpecialName)
+                   .Do(method => harmony.Patch(method, transpiler: new HarmonyMethod(m_EndlessGridPatcher_Random)));
     }
 }

@@ -1,5 +1,4 @@
-﻿using CyberSeedSetter.Cheats;
-using GameConsole;
+﻿using GameConsole;
 using GameConsole.CommandTree;
 using plog;
 
@@ -13,8 +12,13 @@ public sealed class SeedCommands(Console con) : CommandRoot(con), IConsoleLogger
 
     protected override Branch BuildTree(Console con)
     {
-        return Branch("cybergrind-seed",
-            Leaf("set", static (int seed) => Plugin.Configs.rngSeed.Value = seed),
-            Leaf("get", () => Log.Info($"Current seed value: {SeedOverrideCheat.CurrentSeed}")));
+        return SceneHelper.CurrentScene != "Endless"
+                   ? Branch("cybergrind-seed",
+                       Leaf<int>("set", Setter),
+                       Leaf("get", Getter))
+                   : Branch("cybergrind-seed",
+                       Leaf<int>("set", Setter));
     }
+    private static void Setter(int seed) => Plugin.Configs.rngSeed.Value = seed;
+    private void Getter() => Log.Info($"Current seed value: {RandomManager.RandomInstance.Seed}");
 }

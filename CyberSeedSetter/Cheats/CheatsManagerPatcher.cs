@@ -27,6 +27,7 @@ public static class CheatsManagerPatcher
     }
     private static void RegisterCheats(CheatsManager __instance)
     {
+        if (SceneHelper.CurrentScene != "Endless") return;
         Plugin.Logger.LogInfo("Registering SeedOverrideCheat");
         __instance.RegisterCheat(new SeedOverrideCheat(), "meta");
     }
