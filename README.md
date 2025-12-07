@@ -1,4 +1,4 @@
-﻿# Cybergrind Seed Setter
+# Cybergrind Seed Setter
 ![Version](https://img.shields.io/badge/version-1.0.0-navy) <br>
 A mod that allows players to get and set seeds for Cybergrind runs
 <br>
