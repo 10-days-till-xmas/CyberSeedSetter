@@ -1,4 +1,6 @@
-﻿namespace CyberSeedSetter;
+﻿using System;
+
+namespace CyberSeedSetter;
 
 public static class RandomManager
 {
@@ -10,5 +12,8 @@ public static class RandomManager
                              ? new SeededRandom(Plugin.Configs.rngSeed.Value)
                              : new SeededRandom();
         Plugin.Logger.LogInfo($"Initializing RandomManager with seed = {RandomInstance.Seed}");
+        Plugin.FileLogger
+              .GetFile(FileLogger.LogKeys.History)
+              .AppendLines($"{DateTime.Now.ToShortDateString()} - {DateTime.Now.ToShortTimeString()}: {RandomInstance.Seed}");
     }
 }

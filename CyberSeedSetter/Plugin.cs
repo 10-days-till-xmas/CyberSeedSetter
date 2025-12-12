@@ -25,6 +25,7 @@ public sealed class Plugin : BaseUnityPlugin
     }
     internal new static ManualLogSource Logger { get; private set; } = null!;
     internal static PluginConfigs Configs { get; private set; } = null!;
+    internal static FileLogger FileLogger { get; private set; } = new();
 
     private void Awake()
     {
